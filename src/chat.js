@@ -4,7 +4,7 @@ import './App.css';
 function Chat() {
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState('');
-  const chatContainerRef = useRef(null); // Create a ref for the chat container
+  const chatContainerRef = useRef(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -12,7 +12,7 @@ function Chat() {
       addMessage('user', userInput);
 
       try {
-        const response = await fetch('http://localhost:5000/backend/get_response', {
+        const response = await fetch('https://bot-lg9n.onrender.com/get_response', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ function Chat() {
         if (audioBase64) {
           playAudio(audioBase64);
         }
-        addMessage('bot', responseData.response, responseData.audio);
+        addMessage('bot', responseData.response);
       } catch (error) {
         console.error('Error fetching response:', error);
       }
@@ -38,21 +38,15 @@ function Chat() {
   }, [messages]);
 
   // ... playAudio and addMessage functions ...
+
   const playAudio = async (audioBase64) => {
     try {
-      // Decode the base64 audio data
-      const audioBytes = atob(audioBase64);
-
-      // Convert the decoded bytes to an ArrayBuffer
-      const audioBuffer = new ArrayBuffer(audioBytes.length);
-      const audioView = new Uint8Array(audioBuffer);
-      for (let i = 0; i < audioBytes.length; i++) {
-        audioView[i] = audioBytes.charCodeAt(i);
-      }
+      // Convert the base64 audio to an ArrayBuffer
+      const arrayBuffer = Uint8Array.from(atob(audioBase64), c => c.charCodeAt(0)).buffer;
 
       // Create an AudioBuffer from the ArrayBuffer
       const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      const audioSource = await audioContext.decodeAudioData(audioBuffer);
+      const audioSource = await audioContext.decodeAudioData(arrayBuffer);
 
       // Create an AudioBufferSourceNode and play the audio
       const audioNode = audioContext.createBufferSource();
@@ -69,8 +63,8 @@ function Chat() {
     }
   };
 
-  const addMessage = (sender, text, audio) => {
-    const newMessage = { sender, text, audio };
+  const addMessage = (sender, text) => {
+    const newMessage = { sender, text };
     setMessages((prevMessages) => [...prevMessages, newMessage]);
   };
 
@@ -83,8 +77,8 @@ function Chat() {
         {/* Chat interface */}
         <div
           className="chat-container"
-          ref={chatContainerRef} // Attach the ref to the chat container
-          tabIndex={0} // Add tabIndex to make the div focusable
+          ref={chatContainerRef}
+          tabIndex={0}
         >
           <div className="message-box">
             {messages.map((message, index) => (
