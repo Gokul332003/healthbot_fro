@@ -10,7 +10,7 @@ function Chat() {
     e.preventDefault();
     if (userInput.trim() !== '') {
       addMessage('user', userInput);
-
+  
       try {
         const response = await fetch('https://bot-lg9n.onrender.com/get_response', {
           method: 'POST',
@@ -31,6 +31,7 @@ function Chat() {
       setUserInput('');
     }
   }
+  
 
   useEffect(() => {
     // Focus on the chat container when messages change
