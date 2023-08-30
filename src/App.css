@@ -1,16 +1,16 @@
 /* Chat container styles */
 .chat-container {
   display: flex;
-  flex-direction: column; /* Change to column direction */
-  height: calc(100vh - 60px); /* Adjust the height to leave space for the input form */
+  flex-direction: column;
+  height: calc(100vh - 60px);
   background-color: #f5f5f5;
-  overflow-y: auto; /* Add overflow-y to allow scrolling */
+  overflow-y: auto;
 }
 
 .message-box {
   flex: 1;
   padding: 5px;
-  overflow-y: auto; /* Add overflow-y to the message box */
+  overflow-y: auto;
 }
 
 .message {
@@ -31,6 +31,7 @@
   color: #000;
 }
 
+/* Updated input box styles */
 .input-form {
   display: flex;
   align-items: center;
@@ -38,6 +39,8 @@
   background-color: #fff;
   border-top: 1px solid #ddd;
   box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  bottom: 0; /* Stick the input box to the bottom */
 }
 
 .input-form input {
@@ -62,24 +65,4 @@
 
 .input-form button:hover {
   background-color: #2e87ed;
-}
-
-/* Component container styles */
-.component-container {
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
-  color: #000;
-  font-size: 16px;
-}
-
-.component {
-  margin-bottom: 20px;
-  padding: 15px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
